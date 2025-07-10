@@ -1,6 +1,7 @@
 package by.vsu.repository.jdbc;
 
 import by.vsu.entity.Account;
+import by.vsu.repository.AccountRepository;
 import by.vsu.repository.RepositoryException;
 
 import java.sql.PreparedStatement;
@@ -11,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class AccountRepository extends BaseRepository<Account> {
-	public AccountRepository() {
+public class AccountRepositoryImpl extends BaseRepository<Account> implements AccountRepository {
+	public AccountRepositoryImpl() {
 		super(
 			"SELECT \"id\", \"number\", \"owner\", \"balance\", \"active\" FROM \"account\" WHERE \"id\" = ?",
 			"INSERT INTO \"account\"(\"number\", \"owner\") VALUES (?, ?)",
@@ -21,6 +22,7 @@ public class AccountRepository extends BaseRepository<Account> {
 		);
 	}
 
+	@Override
 	public List<Account> readAll() throws RepositoryException {
 		String sql = "SELECT \"id\", \"number\", \"owner\", \"balance\", \"active\" FROM \"account\"";
 		List<Account> accounts = new ArrayList<>();
@@ -28,6 +30,7 @@ public class AccountRepository extends BaseRepository<Account> {
 		return accounts;
 	}
 
+	@Override
 	public List<Account> readActive() throws RepositoryException {
 		String sql = "SELECT \"id\", \"number\", \"owner\", \"balance\", \"active\" FROM \"account\" WHERE \"active\" = TRUE";
 		List<Account> accounts = new ArrayList<>();
@@ -35,6 +38,7 @@ public class AccountRepository extends BaseRepository<Account> {
 		return accounts;
 	}
 
+	@Override
 	public Optional<Account> readByNumber(String number) throws RepositoryException {
 		String sql = "SELECT \"id\", \"number\", \"owner\", \"balance\", \"active\" FROM \"account\" WHERE \"number\" = ?";
 		AtomicReference<Account> account = new AtomicReference<>();

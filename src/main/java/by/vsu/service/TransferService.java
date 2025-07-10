@@ -2,9 +2,9 @@ package by.vsu.service;
 
 import by.vsu.entity.Account;
 import by.vsu.entity.Transfer;
+import by.vsu.repository.AccountRepository;
 import by.vsu.repository.RepositoryException;
-import by.vsu.repository.jdbc.AccountRepository;
-import by.vsu.repository.jdbc.TransferRepository;
+import by.vsu.repository.TransferRepository;
 import by.vsu.service.exception.AccountNotActiveServiceException;
 import by.vsu.service.exception.AccountNotExistsServiceException;
 import by.vsu.service.exception.InsufficientAccountFundsServiceException;

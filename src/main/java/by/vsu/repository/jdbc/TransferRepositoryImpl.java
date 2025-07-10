@@ -3,6 +3,7 @@ package by.vsu.repository.jdbc;
 import by.vsu.entity.Account;
 import by.vsu.entity.Transfer;
 import by.vsu.repository.RepositoryException;
+import by.vsu.repository.TransferRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class TransferRepository extends BaseRepository<Transfer> {
-	public TransferRepository() {
+public class TransferRepositoryImpl extends BaseRepository<Transfer> implements TransferRepository {
+	public TransferRepositoryImpl() {
 		super(
 			"SELECT \"id\", \"sender_id\", \"receiver_id\", \"sum\", \"date\", \"purpose\" FROM \"transfer\" WHERE \"id\" = ?",
 			"INSERT INTO \"transfer\"(\"sender_id\", \"receiver_id\", \"sum\", \"purpose\") VALUES (?, ?, ?, ?)",
@@ -22,6 +23,7 @@ public class TransferRepository extends BaseRepository<Transfer> {
 		);
 	}
 
+	@Override
 	public List<Transfer> readByAccount(Long accountId) throws RepositoryException {
 		String sql = "SELECT \"id\", \"sender_id\", \"receiver_id\", \"sum\", \"date\", \"purpose\" FROM \"transfer\" WHERE \"sender_id\" = ? OR \"receiver_id\" = ? ORDER BY \"date\" DESC";
 		List<Transfer> transfers = new ArrayList<>();
